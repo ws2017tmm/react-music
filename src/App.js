@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+/*
+ * @Description: 
+ * @Version: 1.0
+ * @Autor: StevenWu
+ * @Date: 2021-02-25 15:26:11
+ * @LastEditors: StevenWu
+ * @LastEditTime: 2021-03-22 14:18:41
+ */
 
-function App() {
+import React, { memo, Suspense } from 'react'
+import { Provider } from 'react-redux'
+import { renderRoutes } from 'react-router-config'
+
+import routers from '@/router'
+import store from '@/store'
+
+import { HashRouter } from 'react-router-dom'
+import WSAPPHeader from '@/components/app-header'
+import WSAPPFooter from '@/components/app-footer'
+import WSAppPlayerBar from '@/pages/player/app-player-bar'
+
+
+export default memo(function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <Provider store={store}>
+      <HashRouter>
+        <WSAPPHeader />
+        <Suspense fallback={<div>page loading</div>}>
+          {renderRoutes(routers)}
+        </Suspense>
+        <WSAPPFooter/>
+        <WSAppPlayerBar />
+      </HashRouter>
+    </Provider>
+  )
+})
 
-export default App;
